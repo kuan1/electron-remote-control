@@ -2,9 +2,9 @@
   <div class="test-container">
     <div v-if="text" class="center-flex">{{text}}</div>
     <template v-else>
-      <h2 class="center-flex">你的控制码</h2>
+      <h2 class="center-flex">你的控制码: {{localCode || '-'}}</h2>
       <div class="center-flex">
-        <input type="text" class="k-input flex1" placeholder="请输入您的控制码" />
+        <input v-model="remoteCode" type="text" class="k-input flex1" placeholder="请输入您的控制码" />
         <button @click="startControl" class="k-btn k-btn-primary">确认</button>
       </div>
     </template>
@@ -24,12 +24,13 @@ const getTextMap = name => {
 export default {
   data() {
     return {
-      code: "",
+      localCode: "",
+      remoteCode: "",
       text: ""
     };
   },
   mounted() {
-    // this.login();
+    this.login();
     ipcRenderer.on("control-state-change", this.handleStateChange);
   },
   beforeDestroy() {
@@ -37,15 +38,16 @@ export default {
   },
   methods: {
     async login() {
-      const code = await ipcRenderer.invoke("login");
-      console.log(code);
+      const localCode = await ipcRenderer.invoke("login");
+      console.log(localCode);
+      this.localCode = localCode;
     },
     handleStateChange({ name, type }) {
       const textMap = getTextMap(name);
       this.text = textMap[type] || "";
     },
     startControl() {
-      ipcRenderer.send("control", this.code);
+      ipcRenderer.send("control", this.remoteCode);
     }
   }
 };
