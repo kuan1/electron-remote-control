@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "electron main/index.js",
+    "start": "concurrently \"yarn start:renderer\" \"wait-on http://localhost:8080 && yarn start:main\"",
+    "start:renderer": "cd renderer && yarn serve",
+    "start:main": "electron main/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^5.1.0",
     "electron": "^8.2.0",
-    "electron-is-dev": "^1.1.0"
+    "electron-is-dev": "^1.1.0",
+    "wait-on": "^4.0.1"
   }
 }
