@@ -1,6 +1,7 @@
 const path = require('path')
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
+const handleIPC = require('./handleIPC')
 
 let win
 
@@ -20,4 +21,6 @@ app.on('ready', () => {
       path.resolve(__dirname, '..', 'renderer', 'dist', 'index.html')
     )
   }
+
+  handleIPC()
 })
