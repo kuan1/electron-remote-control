@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       localCode: "",
-      remoteCode: "",
+      remoteCode: "1234",
       text: ""
     };
   },
@@ -34,15 +34,15 @@ export default {
     ipcRenderer.on("control-state-change", this.handleStateChange);
   },
   beforeDestroy() {
-    ipcRenderer.removeListener("control-state-change");
+    ipcRenderer.removeListener("control-state-change", this.handleStateChange);
   },
   methods: {
     async login() {
       const localCode = await ipcRenderer.invoke("login");
-      console.log(localCode);
       this.localCode = localCode;
     },
-    handleStateChange({ name, type }) {
+    handleStateChange(e, params) {
+      const { name, type } = params;
       const textMap = getTextMap(name);
       this.text = textMap[type] || "";
     },
