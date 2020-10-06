@@ -334,10 +334,10 @@ electron-is-dev@^1.1.0:
   resolved "https://registry.npm.taobao.org/electron-is-dev/download/electron-is-dev-1.1.0.tgz#b15a2a600bdc48a51a857d460e05f15b19a2522c"
   integrity sha1-sVoqYAvcSKUahX1GDgXxWxmiUiw=
 
-electron@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.npm.taobao.org/electron/download/electron-8.2.0.tgz#f3e3de23a6178b5ad7baa70f4814d6332a3212c2"
-  integrity sha1-8+PeI6YXi1rXuqcPSBTWMyoyEsI=
+electron@^8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-8.5.1.tgz#db1c0c1dab16bfa3ac87bfc4c0ad86d43c3cfff4"
+  integrity sha512-bsjMmjERUKFFh9JRX77rB/m3PizgxJvtAYnUkLFOj4nYofpRhaABkOSCzH/e/tPwHyu/PYh0oDfSXW6IEwG4gQ==
   dependencies:
     "@electron/get" "^1.0.1"
     "@types/node" "^12.0.12"
