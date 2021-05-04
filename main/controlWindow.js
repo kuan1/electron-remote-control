@@ -1,6 +1,6 @@
-const path = require('path')
 const { BrowserWindow } = require('electron')
-// const isDev = require('electron-is-dev')
+const { scheme } = require('./constant')
+const resolve = require('./utils/resolve')
 
 let win
 
@@ -9,15 +9,13 @@ function create() {
     width: 500,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
-    }
+      preload: resolve('main/preload'),
+    },
   })
 
-  win.loadFile(
-    path.resolve(__dirname, '..', 'renderer', 'public', 'control.html')
-  )
+  win.loadURL(`${scheme}:///./control.html`)
 }
 
 module.exports = {
-  create
+  create,
 }

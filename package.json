@@ -1,21 +1,24 @@
 {
   "name": "electron-remote-control",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "electron远程控制",
+  "main": "main",
   "scripts": {
-    "start": "concurrently \"yarn start:renderer\" \"wait-on http://localhost:8080 && yarn start:main\"",
-    "start:renderer": "cd renderer && yarn serve",
-    "start:main": "electron main/index.js",
+    "dev": "ELECTRON_DISABLE_SECURITY_WARNINGS=true electron .",
+    "build": "NODE_ENV=production electron-builder -mw",
+    "build:win": "NODE_ENV=production electron-builder -w",
+    "build:mac": "NODE_ENV=production electron-builder -m",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "luzhongk@126.com",
   "license": "ISC",
+  "devDependencies": {
+    "electron": "^12.0.6",
+    "electron-builder": "^22.10.5"
+  },
   "dependencies": {
-    "concurrently": "^5.1.0",
-    "electron": "^9.4.0",
-    "electron-is-dev": "^1.1.0",
-    "wait-on": "^4.0.1"
+    "electron-is-dev": "^2.0.0",
+    "electron-localshortcut": "^3.2.1"
   }
 }
