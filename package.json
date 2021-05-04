@@ -13,6 +13,14 @@
   "keywords": [],
   "author": "luzhongk@126.com",
   "license": "ISC",
+  "build": {
+    "productName": "远程控制",
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  },
   "devDependencies": {
     "electron": "^12.0.6",
     "electron-builder": "^22.10.5"

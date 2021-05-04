@@ -1,4 +1,4 @@
-const { app } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
 const { create: createWin } = require('./mainWindow')
 const handleIPC = require('./handleIPC')
@@ -24,4 +24,8 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) createWin()
 })

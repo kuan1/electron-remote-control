@@ -18,6 +18,10 @@ function create() {
     win.show() // 初始化后再显示
   })
 
+  win.on('closed', () => {
+    win = null
+  })
+
   win.loadURL(`${scheme}:///./index.html`)
 }
 
