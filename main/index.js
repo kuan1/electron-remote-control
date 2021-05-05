@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
-const { create: createWin } = require('./mainWindow')
+const { create: createWin } = require('./windows/main')
 const handleIPC = require('./handleIPC')
 
 const createProtocol = require('./utils/createProtocol')

@@ -1,16 +1,18 @@
 const { BrowserWindow } = require('electron')
-const { scheme } = require('./constant')
-const resolve = require('./utils/resolve')
+const { scheme } = require('../constant')
+const resolve = require('../utils/resolve')
 
 let win
 
 function create() {
   win = new BrowserWindow({
-    width: 500,
-    height: 600,
+    width: 1000,
+    height: 680,
     show: false,
     webPreferences: {
       preload: resolve('main/preload'),
+      // nodeIntegration: true,
+      // contextIsolation: false,
     },
   })
 

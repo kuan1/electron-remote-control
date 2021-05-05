@@ -1,6 +1,6 @@
 const { BrowserWindow } = require('electron')
-const { scheme } = require('./constant')
-const resolve = require('./utils/resolve')
+const { scheme } = require('../constant')
+const resolve = require('../utils/resolve')
 
 let win
 

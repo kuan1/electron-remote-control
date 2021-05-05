@@ -15,10 +15,10 @@
   "license": "ISC",
   "build": {
     "productName": "远程控制",
-    "win": {
-      "target": [
-        "nsis"
-      ]
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "runAfterFinish": true
     }
   },
   "devDependencies": {
