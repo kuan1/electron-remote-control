@@ -25,3 +25,7 @@ button.onclick = async () => {
 
   electron.createControl()
 }
+
+document.querySelector('.test-btn').onclick = async () => {
+  electron.mouseMove(300, 100)
+}

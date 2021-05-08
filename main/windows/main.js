@@ -6,9 +6,10 @@ let win
 
 function create() {
   win = new BrowserWindow({
-    width: 1000,
-    height: 680,
+    width: 375,
+    height: 640,
     show: false,
+    center: true,
     webPreferences: {
       preload: resolve('main/preload'),
       // nodeIntegration: true,
