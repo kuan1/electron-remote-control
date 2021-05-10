@@ -30,7 +30,8 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
-.video {
+.video,
+.video-wrap {
   position: fixed;
   left: 0;
   top: 0;
@@ -38,6 +39,25 @@ body {
   height: 100%;
   z-index: 100;
   background-color: black;
+}
+
+.close-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 100;
+  cursor: pointer;
+}
+.close-icon:hover {
+  opacity: 0.8;
+}
+.close-icon .iconfont {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .circles {

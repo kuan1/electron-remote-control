@@ -1,14 +1,16 @@
 import copy from '../vendor/copy.js'
 import toast from '../vendor/toast.js'
 import { friend, user } from './user.js'
-import { connect, sendOffer, sendAnswer } from './socket.js'
-import { initOfferPC, initAnswerPC, getOfferAndIcecandidades, getAnswerAndIcecandidades } from './webRTC.js'
+import { connect, sendOffer, sendAnswer, closeCtrl } from './socket.js'
+import { close, initOfferPC, initAnswerPC, getOfferAndIcecandidades, getAnswerAndIcecandidades } from './webRTC.js'
 
 const connectBtn = document.querySelector('.connect-btn')
 const copyBtn = document.querySelector('.copy-icon')
 const friendInput = document.querySelector('.friend-code')
 const myCodeSpan = document.querySelector('#my-code')
 const video = document.querySelector('.video')
+const videoWrap = document.querySelector('.video-wrap')
+const closeIcon = document.querySelector('.close-icon')
 
 // 链接socket
 connect({ connectSuccess, gotOffer })
@@ -21,6 +23,12 @@ connectBtn.onclick = connectFirend
 
 // 复制自己的code
 copyBtn.onclick = copyMyCode
+
+// 关闭链接
+closeIcon.onclick = () => {
+  close()
+  closeCtrl()
+}
 
 // 朋友code输入框change事件
 friendInput.oninput = function () {
@@ -37,6 +45,7 @@ function connectSuccess(code) {
 // 接收到offer
 async function gotOffer(data) {
   await initAnswerPC(video)
+  videoWrap.classList.remove('hide')
   const { icecandidades, answer } = await getAnswerAndIcecandidades(data)
   sendAnswer({ icecandidades, answer })
 }
@@ -53,7 +62,7 @@ async function connectFirend() {
 
   friend.code = remoteCode
   connectBtn.disabled = true
-  video.classList.remove('hide')
+  videoWrap.classList.remove('hide')
   await initOfferPC(video)
   connectBtn.disabled = false
   const { icecandidades, offer } = await getOfferAndIcecandidades()

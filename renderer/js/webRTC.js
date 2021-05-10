@@ -29,6 +29,7 @@ function initAnswerPC(video) {
       .then((e) => {
         stream = e
         pc.addStream(stream)
+        video.srcObject = stream
         // 通知ready
         readyCallbacks.forEach((resolve) => resolve())
         readyCallbacks = []
@@ -115,6 +116,9 @@ function close() {
     stream.getTracks().forEach((track) => track.stop())
   }
   pc = stream = null
+  icecandidades = []
+  readyCallbacks = []
+  document.querySelector('.video-wrap').classList.add('hide')
 }
 
 export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close }
