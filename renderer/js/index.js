@@ -3,6 +3,7 @@ import toast from '../vendor/toast.js'
 import { friend, user } from './user.js'
 import { connect, sendOffer, sendAnswer, closeCtrl } from './socket.js'
 import { close, initOfferPC, initAnswerPC, getOfferAndIcecandidades, getAnswerAndIcecandidades } from './webRTC.js'
+import './bindSendDataEvent.js'
 
 const connectBtn = document.querySelector('.connect-btn')
 const copyBtn = document.querySelector('.copy-icon')
