@@ -28,12 +28,6 @@ function create() {
   win.loadURL(`${scheme}:///./index.html`)
 }
 
-function send(channel, ...args) {
-  if (!win) return console.error('win is not ready')
-  win.webContents.send(channel, ...args)
-}
-
 module.exports = {
   create,
-  send,
 }

@@ -1,4 +1,4 @@
-const constraints = { audio: false, video: true }
+import { getScreenStream } from '../vendor/electron.js'
 
 const handleError = (type, shouldAlert = false) => (error) => {
   if (shouldAlert) alert(error)
@@ -11,23 +11,21 @@ let stream
 let readyCallbacks = []
 let icecandidades = []
 
-function initPC(isOffer = true, video) {
+function initOfferPC(video) {
   if (pc) return pc
-
   pc = new RTCPeerConnection()
-
-  if (isOffer) {
-    pc.onaddstream = function (e) {
-      video.srcObject = e.stream
-    }
-    return pc
+  pc.onaddstream = function (e) {
+    video.srcObject = e.stream
   }
+  return pc
+}
 
-  return getStream()
+function initAnswerPC(video) {
+  if (!pc) initOfferPC(video)
+  return stream ? pc : getStream()
 
   function getStream() {
-    navigator.mediaDevices
-      .getDisplayMedia(constraints)
+    return getScreenStream()
       .then((e) => {
         stream = e
         pc.addStream(stream)
@@ -40,8 +38,8 @@ function initPC(isOffer = true, video) {
   }
 }
 
-function ready() {
-  if (pc) return pc
+function streamReady() {
+  if (stream) return true
   return new Promise((resolve) => {
     readyCallbacks.push(resolve)
   })
@@ -65,8 +63,8 @@ function getCandidades() {
 async function createOffer() {
   return pc
     .createOffer({
-      offerToReceiveAudio: constraints.audio ? 1 : 0,
-      offerToReceiveVideo: constraints.video ? 1 : 0,
+      offerToReceiveAudio: false,
+      offerToReceiveVideo: true,
     })
     .then((desc) => {
       pc.setLocalDescription(desc)
@@ -77,7 +75,7 @@ async function createOffer() {
 
 // 获取offer、icecandidades
 async function getOfferAndIcecandidades() {
-  await ready()
+  if (!pc) throw new Error('pc is null')
   const [icecandidades, offer] = await Promise.all([getCandidades(), createOffer()])
   // console.log(JSON.stringify({ icecandidades, offer }))
   return { icecandidades, offer }
@@ -102,7 +100,7 @@ async function createAnswer(offer) {
 }
 
 async function getAnswerAndIcecandidades(data) {
-  await ready()
+  await streamReady()
   const [icecandidades, answer] = await Promise.all([getCandidades(), createAnswer(data.offer)])
   data.icecandidades.forEach((condidate) => pc.addIceCandidate(new RTCIceCandidate(condidate)))
   // console.log('condidade', JSON.stringify(condidades))
@@ -116,7 +114,7 @@ function close() {
   if (stream) {
     stream.getTracks().forEach((track) => track.stop())
   }
-  stream = null
+  pc = stream = null
 }
 
-export { initPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close }
+export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close }
