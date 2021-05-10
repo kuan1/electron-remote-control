@@ -42,6 +42,11 @@
     dir-compare "^2.4.0"
     fs-extra "^9.0.1"
 
+"@halobear/js-feedback@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.nlark.com/@halobear/js-feedback/download/@halobear/js-feedback-1.0.2.tgz#a5d6ea3cafcce37894d3c88d1b6e0a08f2dc4b47"
+  integrity sha1-pdbqPK/M43iU08iNG24KCPLcS0c=
+
 "@malept/cross-spawn-promise@^1.1.0", "@malept/cross-spawn-promise@^1.1.1":
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@malept/cross-spawn-promise/download/@malept/cross-spawn-promise-1.1.1.tgz#504af200af6b98e198bce768bc1730c6936ae01d"

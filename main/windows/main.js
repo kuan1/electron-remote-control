@@ -6,8 +6,8 @@ let win
 
 function create() {
   win = new BrowserWindow({
-    width: 375,
-    height: 640,
+    width: 800,
+    height: 600,
     show: false,
     center: true,
     webPreferences: {

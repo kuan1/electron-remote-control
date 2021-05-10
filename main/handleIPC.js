@@ -1,6 +1,5 @@
 const { ipcMain } = require('electron')
 const { send: sendMainWindow } = require('./windows/main')
-const { create: createControl } = require('./windows/control')
 const robot = require('./utils/robot')
 
 module.exports = () => {
@@ -11,7 +10,6 @@ module.exports = () => {
 
   ipcMain.on('control', async (e, remoteCode) => {
     sendMainWindow('control-state-change', { name: remoteCode, type: 1 })
-    createControl()
   })
 
   ipcMain.handle('getScreen', async () => {

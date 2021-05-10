@@ -5,28 +5,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>主页面</title>
-  <style>
-    h2 {
-      text-align: center;
-    }
-
-    fieldset {
-      padding: 20px;
-      margin: 20px 0;
-    }
-  </style>
+  <title>远程控制计算机</title>
+  <link rel="stylesheet" href="./css/kuan-css.css">
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
-  <h2>主页面</h2>
-  <fieldset>
-    <legend>登录</legend>
-    <button>打开登录</button>
-    <button class="test-btn">点击测试</button>
-  </fieldset>
-  <div class="code"></div>
-  <script src="./index.js"></script>
+  <ul class="circles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <div class="login-wrap p-lg shadow hover:shadow-lg">
+    <h1 class="mb-md font-normal">控制远程计算机</h1>
+    <p class="mb-lg">
+      <span>我的控制码:</span>
+      <span class="font-normal" id="my-code"></span>
+      <span class="balloon-right" data-balloon="点击复制">
+        <img src="assets/copy_icon.png" class="copy-icon" style="display: none;" />
+      </span>
+    </p>
+    <input class="friend-code k-input mb-md" type="text" placeholder="好友连接码">
+    <button class="connect-btn k-btn k-btn-primary" disabled>链接好友</button>
+  </div>
+
+  <video class="hide video" autoplay></video>
+
+  <script src="./vendor/feedback.js"></script>
+  <script src="./js/index.js" type="module"></script>
 </body>
 
 </html>
