@@ -1,4 +1,5 @@
 import { getScreenStream } from '../vendor/electron.js'
+import onReceiveData from './onReceiveData.js'
 
 const handleError = (type, shouldAlert = false) => (error) => {
   if (shouldAlert) alert(error)
@@ -10,6 +11,8 @@ let pc
 let stream
 let readyCallbacks = []
 let icecandidades = []
+let sendChannel
+let receiveChannel
 
 function initOfferPC(video) {
   if (pc) return pc
@@ -17,6 +20,8 @@ function initOfferPC(video) {
   pc.onaddstream = function (e) {
     video.srcObject = e.stream
   }
+  sendChannel = pc.createDataChannel('sendDataChannel')
+  pc.ondatachannel = receiveChannelCallback
   return pc
 }
 
@@ -37,6 +42,18 @@ function initAnswerPC(video) {
       })
       .catch(handleError('getStream', true))
   }
+}
+
+function receiveChannelCallback(event) {
+  receiveChannel = event.channel
+  receiveChannel.onmessage = onReceiveData
+}
+
+function sendData(data) {
+  if (!sendChannel) {
+    throw new Error('sendChannel is null')
+  }
+  sendChannel.send(data)
 }
 
 function streamReady() {
@@ -113,13 +130,13 @@ async function getAnswerAndIcecandidades(data) {
 function close() {
   if (!pc) return
   pc.close()
-  if (stream) {
-    stream.getTracks().forEach((track) => track.stop())
-  }
-  pc = stream = null
+  sendChannel && receiveChannel.close()
+  receiveChannel && receiveChannel.close()
+  stream && stream.getTracks().forEach((track) => track.stop())
+  sendChannel = receiveChannel = pc = stream = null
   icecandidades = []
   readyCallbacks = []
   document.querySelector('.video-wrap').classList.add('hide')
 }
 
-export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close }
+export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close, sendData }

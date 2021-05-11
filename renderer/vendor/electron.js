@@ -1,6 +1,7 @@
 const { desktopCapturer } = window.electron
 
 async function getScreenStream() {
+  // return navigator.mediaDevices.getUserMedia({ audio: false, video: true })
   const sources = await desktopCapturer.getSources({ types: ['screen'] })
   return new Promise((resolve, reject) => {
     navigator.webkitGetUserMedia(
