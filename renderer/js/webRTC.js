@@ -1,6 +1,6 @@
-import { getScreenStream } from '../vendor/electron.js'
+import { getScreenStream, adjustWindowSize } from '../vendor/electron.js'
 import onReceiveData from './onReceiveData.js'
-import { removeEvent } from './bindSendDataEvent.js'
+import { sendScreenSize, removeEvent } from './bindSendDataEvent.js'
 
 const handleError = (type, shouldAlert = false) => (error) => {
   if (shouldAlert) alert(error)
@@ -8,26 +8,36 @@ const handleError = (type, shouldAlert = false) => (error) => {
   return Promise.reject(error)
 }
 
+let type = 'offer' // answer
 let pc
 let stream
 let readyCallbacks = []
 let icecandidades = []
 let sendChannel
 let receiveChannel
+let tmpSendData = []
 
 function initOfferPC(video) {
+  type = 'offer'
   if (pc) return pc
+  tmpSendData = []
   pc = new RTCPeerConnection()
   pc.onaddstream = function (e) {
     video.srcObject = e.stream
   }
   sendChannel = pc.createDataChannel('sendDataChannel')
+  // 防止数据提前发出
+  sendChannel.onopen = () => {
+    tmpSendData.forEach((data) => sendData(data))
+    tmpSendData = []
+  }
   pc.ondatachannel = receiveChannelCallback
   return pc
 }
 
 function initAnswerPC(video) {
   if (!pc) initOfferPC(video)
+  type = 'answer'
   return stream ? pc : getStream()
 
   function getStream() {
@@ -48,14 +58,19 @@ function initAnswerPC(video) {
 function receiveChannelCallback(event) {
   receiveChannel = event.channel
   receiveChannel.onmessage = onReceiveData
+  // 发送当前桌面尺寸到控制端
+  type === 'answer' && sendScreenSize()
 }
 
 function sendData(data) {
   if (!sendChannel) {
-    throw new Error('sendChannel is null')
+    return console.error('sendChannel is null')
   }
-  console.log('sendData', data)
-  sendChannel.send(JSON.stringify(data))
+  if (sendChannel.readyState === 'open') {
+    sendChannel.send(JSON.stringify(data))
+  } else {
+    tmpSendData.push(data)
+  }
 }
 
 function streamReady() {
@@ -140,6 +155,7 @@ function close() {
   readyCallbacks = []
   document.querySelector('.video-wrap').classList.add('hide')
   removeEvent()
+  adjustWindowSize(850, 650)
 }
 
 export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close, sendData }
