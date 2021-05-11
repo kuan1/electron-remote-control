@@ -1,6 +1,7 @@
 import { sendData } from './webRTC.js'
 import throttle from '../vendor/throttle.js'
 import { getScreenSize } from '../vendor/electron.js'
+import getKey from '../vendor/getKey.js'
 
 const video = document.querySelector('video')
 
@@ -12,11 +13,15 @@ const onmousemove = throttle((e) => {
 }, 20)
 
 const onkeydown = (e) => {
-  sendData({ event: 'keyToggle', data: { key: e.key, type: 'down' } })
+  const key = getKey(e.key)
+  if (!key) return console.log('key', e.key)
+  sendData({ event: 'keyToggle', data: { key, type: 'down' } })
 }
 
 const onkeyup = (e) => {
-  sendData({ event: 'keyToggle', data: { key: e.key, type: 'up' } })
+  const key = getKey(e.key)
+  if (!key) return console.log('key', e.key)
+  sendData({ event: 'keyToggle', data: { key, type: 'up' } })
 }
 
 const onclick = () => {

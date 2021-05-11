@@ -3,7 +3,7 @@ import { bindMoveMouse, mouseClick, adjustWindowSize, keyToggle } from '../vendo
 
 function onReceiveData(e) {
   const { event, data = {} } = json(e.data)
-  console.log(event, data)
+  // console.log(event, data)
   switch (event) {
     case 'moveMouse':
       bindMoveMouse(data.x, data.y)
@@ -12,7 +12,7 @@ function onReceiveData(e) {
       mouseClick(data.button, data.double)
       break
     case 'keyToggle':
-      keyToggle(data.key, data.type)
+      keyToggle(data.key.toLowerCase(), data.type)
       break
     case 'adjustWindowSize':
       adjustWindowSize(data.width, data.height)
