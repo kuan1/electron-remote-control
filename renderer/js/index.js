@@ -67,7 +67,6 @@ async function connectFirend() {
   connectBtn.disabled = false
   const { icecandidades, offer } = await getOfferAndIcecandidades()
   sendOffer({ icecandidades, offer })
-  console.log(icecandidades, offer)
 }
 
 function copyMyCode() {

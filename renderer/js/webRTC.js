@@ -109,6 +109,7 @@ async function getAnswerAndIcecandidades(data) {
   return { icecandidades, answer }
 }
 
+// 关闭webrtc链接
 function close() {
   if (!pc) return
   pc.close()
