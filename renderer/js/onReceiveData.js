@@ -1,5 +1,5 @@
 import json from '../vendor/json.js'
-import { bindMoveMouse, adjustWindowSize, keyToggle } from '../vendor/electron.js'
+import { bindMoveMouse, mouseClick, adjustWindowSize, keyToggle } from '../vendor/electron.js'
 
 function onReceiveData(e) {
   const { event, data = {} } = json(e.data)
@@ -7,6 +7,9 @@ function onReceiveData(e) {
   switch (event) {
     case 'moveMouse':
       bindMoveMouse(data.x, data.y)
+      break
+    case 'mouseClick':
+      mouseClick(data.button, data.double)
       break
     case 'keyToggle':
       keyToggle(data.key, data.type)
