@@ -10,3 +10,5 @@
 
 - 不支持联合快捷键
 - 控制端视频流还是有些延迟
+
+### 参考 [webrtc](https://github.com/webrtc/samples)
