@@ -14,7 +14,7 @@
   "author": "luzhongk@126.com",
   "license": "ISC",
   "build": {
-    "productName": "远程控制",
+    "productName": "远程控制计算机",
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
