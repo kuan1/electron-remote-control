@@ -1,6 +1,8 @@
 import toast from '../vendor/toast.js'
 import { friend, user } from './user.js'
 import { accessAnswer, close } from './webRTC.js'
+import json from '../vendor/json.js'
+import { bindEvent } from './bindSendDataEvent.js'
 
 let ws
 
@@ -51,6 +53,7 @@ export function connect({ connectSuccess, gotOffer }) {
     const { action } = data || {}
     switch (action) {
       case 'answer':
+        bindEvent()
         accessAnswer(data)
         break
       case 'offer':
@@ -85,12 +88,4 @@ function sendToUser(data, event = 'toUser', toUser = friend.code) {
   if (!ws) return console.error('ws is CLOSED')
   if (!toUser) return console.error('toUser is null')
   ws.send(JSON.stringify({ data, toUser, event }))
-}
-
-function json(text = '') {
-  try {
-    return JSON.parse(text)
-  } catch (e) {
-    return {}
-  }
 }

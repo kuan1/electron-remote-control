@@ -1,5 +1,6 @@
 import { getScreenStream } from '../vendor/electron.js'
 import onReceiveData from './onReceiveData.js'
+import { removeEvent } from './bindSendDataEvent.js'
 
 const handleError = (type, shouldAlert = false) => (error) => {
   if (shouldAlert) alert(error)
@@ -53,7 +54,8 @@ function sendData(data) {
   if (!sendChannel) {
     throw new Error('sendChannel is null')
   }
-  sendChannel.send(data)
+  console.log('sendData', data)
+  sendChannel.send(JSON.stringify(data))
 }
 
 function streamReady() {
@@ -130,13 +132,14 @@ async function getAnswerAndIcecandidades(data) {
 function close() {
   if (!pc) return
   pc.close()
-  sendChannel && receiveChannel.close()
+  sendChannel && sendChannel.close()
   receiveChannel && receiveChannel.close()
   stream && stream.getTracks().forEach((track) => track.stop())
   sendChannel = receiveChannel = pc = stream = null
   icecandidades = []
   readyCallbacks = []
   document.querySelector('.video-wrap').classList.add('hide')
+  removeEvent()
 }
 
 export { initOfferPC, initAnswerPC, getOfferAndIcecandidades, accessAnswer, getAnswerAndIcecandidades, close, sendData }

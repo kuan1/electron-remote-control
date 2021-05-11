@@ -1,12 +1,16 @@
 const { ipcMain } = require('electron')
-const robot = require('./utils/robot')
+const robot = require('robotjs')
 
 module.exports = () => {
   ipcMain.handle('getScreen', async () => {
-    return robot.getScreen()
+    const screenSize = robot.getScreenSize()
+    const height = screenSize.height / 2 - 10
+    const width = screenSize.width
+
+    return { width, height }
   })
 
-  ipcMain.handle('mouseMove', (e, x, y) => {
-    robot.mouseMove(x, y)
+  ipcMain.handle('moveMouse', (e, x, y) => {
+    robot.moveMouse(x, y)
   })
 }

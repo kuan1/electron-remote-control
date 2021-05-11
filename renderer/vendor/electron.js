@@ -1,7 +1,11 @@
-const { desktopCapturer } = window.electron
+const { desktopCapturer, moveMouse } = window.electron || {}
+
+const isElectron = !!window.electron
 
 async function getScreenStream() {
-  // return navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+  // 这段代码是测试用的，如果不是electron环境则使用摄像头
+  if (!isElectron) return navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+  // 否则使用桌面流
   const sources = await desktopCapturer.getSources({ types: ['screen'] })
   return new Promise((resolve, reject) => {
     navigator.webkitGetUserMedia(
@@ -24,4 +28,9 @@ async function getScreenStream() {
   })
 }
 
-export { getScreenStream }
+function bindMoveMouse(x, y) {
+  if (!isElectron) return console.log(x, y)
+  moveMouse(x, y)
+}
+
+export { getScreenStream, bindMoveMouse }
