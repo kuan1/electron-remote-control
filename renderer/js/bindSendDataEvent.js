@@ -1,5 +1,5 @@
 import { sendData } from './webRTC.js'
-import throttle from '../vendor/throttle.js'
+// import throttle from '../vendor/throttle.js'
 import { getScreenSize } from '../vendor/electron.js'
 import getKey from '../vendor/getKey.js'
 
@@ -7,10 +7,10 @@ const video = document.querySelector('video')
 
 let isBind = false
 
-const onmousemove = throttle((e) => {
+const onmousemove = (e) => {
   const { clientX, clientY } = e
   sendData({ event: 'moveMouse', data: { x: clientX, y: clientY } })
-}, 20)
+}
 
 const onkeydown = (e) => {
   const key = getKey(e.key)
