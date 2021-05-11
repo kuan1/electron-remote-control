@@ -14,4 +14,6 @@ module.exports = () => {
   ipcMain.handle('moveMouse', (e, x, y) => robot.moveMouse(x, y))
 
   ipcMain.handle('adjustWindowSize', (e, width = 800, height = 600) => adjustSize(width, height))
+
+  ipcMain.handle('keyToggle', (e, key, type) => console.log(key, type))
 }

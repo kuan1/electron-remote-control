@@ -63,6 +63,7 @@ function receiveChannelCallback(event) {
 }
 
 function sendData(data) {
+  console.log(data)
   if (!sendChannel) {
     return console.error('sendChannel is null')
   }

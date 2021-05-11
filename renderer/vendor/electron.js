@@ -1,4 +1,5 @@
-const { getScreen, adjustWindowSize: setWinSize, desktopCapturer, moveMouse } = window.electron || {}
+const noop = () => {}
+const { getScreen, adjustWindowSize: setWinSize, desktopCapturer, moveMouse, keyToggle = noop } = window.electron || {}
 
 const isElectron = !!window.electron
 
@@ -43,4 +44,4 @@ function bindMoveMouse(x, y) {
   moveMouse(x, y)
 }
 
-export { getScreenSize, adjustWindowSize, getScreenStream, bindMoveMouse }
+export { getScreenSize, adjustWindowSize, getScreenStream, bindMoveMouse, keyToggle }
